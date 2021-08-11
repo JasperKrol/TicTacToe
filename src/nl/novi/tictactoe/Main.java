@@ -16,30 +16,34 @@ public class Main {
         // show board on command line
         printBoard(board);
 
-        String currentPlayer = "X";
+        // create player object
+        Player playerA = new Player("Cross", "X");
+        Player playerB = new Player("Zero", "O");
+
+        Player currentPlayer = playerA;
 
         boolean hasWon = false;
 
         while (!hasWon) {
             // Let the players decide their choices on their board
-            System.out.println("\n Type number from the board where you wish to put your " + currentPlayer + " symbol");
+            System.out.println("\n Type number from the board where you wish to put your " + currentPlayer.getName() + " symbol");
             Scanner userInput = new Scanner(System.in);
             int selectedField = userInput.nextInt();
 
-            board[selectedField] = currentPlayer;
+            board[selectedField] = currentPlayer.getToken();
 
             // show board on command line
             printBoard(board);
 
             // is there a winner?
-            hasWon = hasPlayerWon(board, currentPlayer);
+            hasWon = hasPlayerWon(board, currentPlayer.getToken());
 
             if (hasWon){
-                System.out.println("\n Congratulations to: " + currentPlayer + ". You are the winner!");
+                System.out.println("\n Congratulations to: " + currentPlayer.getName() + ". You are the winner!");
             }
 
             // switch from player
-            currentPlayer = switchPlayer(currentPlayer);
+            currentPlayer = switchPlayer(currentPlayer, playerA, playerB);
         }
 
     }
@@ -56,7 +60,7 @@ public class Main {
             boolean isEndOfRow = (i + 1) % 3 == 0;
             boolean lastField = i == 8;
 
-            if (isEndOfRow == false) {
+            if (!isEndOfRow) {
                 System.out.print(" | ");
             }
 
@@ -66,11 +70,11 @@ public class Main {
         }
     }
 
-    public static String switchPlayer(String currentPlayer) {
-        if (currentPlayer == "X") {
-            return "O";
+    public static Player switchPlayer(Player currentPlayer, Player playerA, Player playerB) {
+        if (currentPlayer.getToken() == "X") {
+            return playerB;
         } else {
-            return "X";
+            return playerA;
         }
     }
 
