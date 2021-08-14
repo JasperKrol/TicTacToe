@@ -3,7 +3,7 @@ package nl.novi.tictactoe;
 public class Player {
 
     // Attributes
-        // save the values
+        // save the variable values
     private String name;
     private String token;
     private int score;
